@@ -13,7 +13,7 @@
 // Doporuceny soubor pro testovani:
 // https://freewavesamples.com/ensoniq-zr-76-01-dope-77-bpm
 
-#define PATH "C:\\Users\\ekral\\Downloads\\file.wav"
+#define PATH "C:\\Users\\ekral\\source\\repos\\AsciiAmplitudeMeter\\file.wav"
 
 int main()
 {
