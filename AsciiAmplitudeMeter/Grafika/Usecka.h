@@ -11,7 +11,7 @@ struct Usecka
 
 	}
 
-	Usecka(double x1, double x2, double y1, double y2)
+	Usecka(double x1, double y1, double x2, double y2)
 		: P1(x1, y1), P2(x2, y2)
 	{
 

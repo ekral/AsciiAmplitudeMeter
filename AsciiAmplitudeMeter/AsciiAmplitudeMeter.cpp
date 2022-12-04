@@ -4,21 +4,22 @@
 #include <Windows.h>
 #include <Mmsystem.h>
 #include <stdio.h>
+#include <chrono>
 #include "Grafika/Platno.h"
 #include "Grafika/RotovanaUsecka.h"
 #include "Grafika/Jehlan.h"
 #include "Audio/Wav.h"
-#include <chrono>
+
+// Doporuceny soubor pro testovani:
+// https://freewavesamples.com/ensoniq-zr-76-01-dope-77-bpm
+
+#define PATH "C:\\Users\\ekral\\Downloads\\file.wav"
 
 int main()
 {
-	// Doporuceny soubor pro testovani:
-	// https://freewavesamples.com/ensoniq-zr-76-01-dope-77-bpm
-
-	auto path = "C:\\Users\\ekral\\Downloads\\file.wav";
 	Wav wav;
 
-	bool ok = wav.LoadWavFile(path);
+	bool ok = wav.LoadWavFile(PATH);
 
 	if (!ok)
 	{
@@ -32,32 +33,41 @@ int main()
 		return -1;
 	}
 
-	Platno platno(20, 70, '-', 'x');
+	Platno platno(20, 70, ' ', 'x');
 
-	RotovanaUsecka rotovanaUsecka1(Bod2d(30.0, 0.0), Bod2d(20.0, 10.0));
-	RotovanaUsecka rotovanaUsecka2(Bod2d(20.0, 10.0), Bod2d(25.0, 10.0));
+	Usecka usecka(0.0, 0.0, 20.0, 0.0);
 
-	PlaySound(L"C:\\Users\\ekral\\Downloads\\file.wav", NULL, SND_FILENAME | SND_ASYNC);
-	Sleep(600);
-	auto start = std::chrono::steady_clock::now();
-
-	for (int i = 0; i < 20000; i++)
+	while (true)
 	{
-		auto elapsedMilliseconds = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - start);
+		PlaySound(TEXT(PATH), NULL, SND_FILENAME | SND_ASYNC);
+		Sleep(200);
 
-		Amplitude max = wav.MaxAmplitude(elapsedMilliseconds.count(), 2);
-		
-		rotovanaUsecka1.ZmenUhel(max.left * 60 );
-		//rotovanaUsecka2.ZmenUhel(max.right * 360 / 2.0);
-		
-		platno.Vymaz();
+		auto start = std::chrono::steady_clock::now();
 
-		rotovanaUsecka1.Nakresli(platno);
-		rotovanaUsecka2.Nakresli(platno);
+		int lMax = 0;
+		int rMax = 0;
 
-		platno.Zobraz();
-		printf("%20lld\n", elapsedMilliseconds.count());
+		bool play = false;
+
+		do
+		{
+			auto elapsedMilliseconds = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - start);
+
+			play = wav.MaxAmplitude(elapsedMilliseconds.count(), 2, lMax, rMax);
+
+			platno.Vymaz();
+
+			int xLeft = (lMax * (platno.pocetSloupcu - 1)) / 32768;
+			int xRight = (rMax * (platno.pocetSloupcu - 1)) / 32768;
+
+			platno.NakresliUsecku(Bod2d(0.0, 1.0), Bod2d(xLeft, 1.0));
+			platno.NakresliUsecku(Bod2d(0.0, 0.0), Bod2d(xRight, 0.0));
+
+			platno.Zobraz();
+			
+		} while (play);
+
+		printf("Stiskni klavesu enter pro opakovani.\n");
+		int znak = getchar();
 	}
-
-	int znak = getchar();
 }

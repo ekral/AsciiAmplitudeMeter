@@ -9,11 +9,13 @@ struct Platno
 {
 private:
 	// Ukol: zmìnit z použití matice na zásobníku na použití øetìzce znakù vèetnì znakù pro nový øádek v jednorozmìrném poli na haldì.
-	int pocetRadku;
-	int pocetSloupcu;
+	
 	char* data;
 
 public:
+	const int pocetRadku;
+	const int pocetSloupcu;
+
 	char pozadi;
 	char popredi;
 
@@ -31,6 +33,7 @@ public:
 	{
 		delete[] data;
 	}
+
 
 	void Vymaz()
 	{

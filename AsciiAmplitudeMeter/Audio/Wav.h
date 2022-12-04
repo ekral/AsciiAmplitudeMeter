@@ -5,31 +5,6 @@
 #include <cmath>
 
 // https://blog.demofox.org/2015/04/14/decibels-db-and-amplitude/
-static double ValueToDb(double amplitude)
-{
-	//if (amplitude <= 0.1) return -20;
-
-	double dB = 20 * std::log10(amplitude);
-
-	return dB;
-}
-
-static double SampleToAmplitude(int16_t sample)
-{
-	double amplitude = ((double)(sample) / -INT16_MIN) + 1.0;
-	return amplitude;
-}
-
-struct Amplitude
-{
-	double left;
-	double right;
-	
-	Amplitude() : left(0.0), right(0.0)
-	{
-
-	}
-};
 
 struct Wav
 {
@@ -57,17 +32,16 @@ struct Wav
 	uint8_t* data;
 	uint32_t framesCount{};
 
-	Amplitude MaxAmplitude(size_t timeMilliseconds, size_t widthMilliseconds)
+	bool MaxAmplitude(size_t timeMilliseconds, size_t widthMilliseconds, int& leftResult, int& rightResult)
 	{
-		Amplitude amplitude;
-		amplitude.left = 0;
-		amplitude.right = 0;
-
 		size_t offset = (timeMilliseconds * fmtSampleRate) / 1000;
 		
 		if (offset >= framesCount)
 		{
-			return amplitude;
+			leftResult = 0;
+			rightResult = 0;
+
+			return false;
 		}
 		
 		size_t width = (widthMilliseconds * fmtSampleRate) / 1000;
@@ -79,25 +53,28 @@ struct Wav
 		}
 
 		int16_t* const ptBegin = reinterpret_cast<int16_t*>(data);
-		int16_t* const ptStart = ptBegin + offset;
-		int16_t* const ptEnd = ptBegin + end;
+		int16_t* const ptStart = ptBegin + (2 * offset);
+		int16_t* const ptEnd =  ptBegin + (2 * end);
+
+		int lMax = 0.0;
+		int rMax = 0.0;
 
 		for (int16_t* p = ptStart; p < ptEnd;)
 		{
-			int16_t leftSample = *p;
+			int16_t left = *p;
 			++p;
 
-			int16_t rightSample = *p;
+			int16_t right = *p;
 			++p;
-
-			double left = SampleToAmplitude(leftSample);
-			double right = SampleToAmplitude(rightSample);
-
-			amplitude.left = std::max<double>(amplitude.left, left);
-			amplitude.right = std::max<double>(amplitude.right, right);
+		
+			lMax = std::max<int>(lMax, std::abs(left));
+			rMax = std::max<int>(rMax, std::abs(right));
 		}
 
-		return amplitude;
+		leftResult = lMax;
+		rightResult = rMax;
+
+		return true;
 	}
 
 	bool LoadWavFile(const char* filePath)
@@ -164,8 +141,8 @@ struct Wav
 			}
 			else
 			{
-				int count = fseek(fp, size, SEEK_CUR);
-				if (count != size) return false;
+				int ret = fseek(fp, size, SEEK_CUR);
+				if (ret != 0) return false;
 			}
 
 		} while (data == nullptr);
