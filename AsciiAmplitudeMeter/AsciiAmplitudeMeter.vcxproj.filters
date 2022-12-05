@@ -20,16 +20,13 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Grafika\RotovanaUsecka.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Grafika\Bod2d.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Grafika\Bod3d.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Grafika\Jehlan.h">
+    <ClInclude Include="Grafika\CtyrbokyHranol.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Grafika\Platno.h">

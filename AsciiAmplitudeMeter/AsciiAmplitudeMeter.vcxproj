@@ -133,10 +133,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Audio\Wav.h" />
-    <ClInclude Include="Grafika\RotovanaUsecka.h" />
     <ClInclude Include="Grafika\Bod2d.h" />
     <ClInclude Include="Grafika\Bod3d.h" />
-    <ClInclude Include="Grafika\Jehlan.h" />
+    <ClInclude Include="Grafika\CtyrbokyHranol.h" />
     <ClInclude Include="Grafika\Platno.h" />
     <ClInclude Include="Grafika\Transformace.h" />
     <ClInclude Include="Grafika\Usecka.h" />

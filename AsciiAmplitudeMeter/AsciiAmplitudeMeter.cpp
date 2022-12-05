@@ -6,8 +6,7 @@
 #include <stdio.h>
 #include <chrono>
 #include "Grafika/Platno.h"
-#include "Grafika/RotovanaUsecka.h"
-#include "Grafika/Jehlan.h"
+#include "Grafika/CtyrbokyHranol.h"
 #include "Audio/Wav.h"
 
 // Doporuceny soubor pro testovani:
@@ -43,8 +42,9 @@ int main()
 
 	Platno platno(20, 70, ' ', 'x');
 
-	Usecka usecka(0.0, 0.0, 20.0, 0.0);
-
+	CtyrbokyHranol levyHranol(Bod3d(2.0, 2.0, -8.0), 3, 3);
+	CtyrbokyHranol pravyHranol(Bod3d(2.0 + 8, 2.0, -8.0), 3, 3);
+	
 	while (true)
 	{
 		PlaySound(TEXT(PATH), NULL, SND_FILENAME | SND_ASYNC);
@@ -65,13 +65,16 @@ int main()
 
 			platno.Vymaz();
 
-			const int max = platno.pocetSloupcu - 1;
+			const int max = 5;
 
-			double xLeft = Rescale(lMax, max);
-			double xRight = Rescale(rMax, max);
+			double vyskaLeft = Rescale(lMax, max);
+			double vyskaRight = Rescale(rMax, max);
 
-			platno.NakresliUsecku(Bod2d(0.0, 1.0), Bod2d(xLeft, 1.0));
-			platno.NakresliUsecku(Bod2d(0.0, 0.0), Bod2d(xRight, 0.0));
+			levyHranol.ZmenVysku(vyskaLeft);
+			pravyHranol.ZmenVysku(vyskaLeft);
+
+			levyHranol.Nakresli(platno);
+			pravyHranol.Nakresli(platno);
 
 			platno.Zobraz();
 			
