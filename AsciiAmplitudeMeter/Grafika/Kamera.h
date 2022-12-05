@@ -12,7 +12,7 @@ struct Kamera
 	{
 	}
 
-	Bod2d Projekce(Bod3d bod, double f)
+	Bod2d Projekce(Bod3d bod)
 	{
 		bod -= pozice;
 
@@ -23,6 +23,6 @@ struct Kamera
 		double xp = -(f * bod.x / bod.z);
 		double yp = -(f * bod.y / bod.z);
 
-		return Bod2d(xp, yp);
+		return Bod2d((4 * xp) + 35, yp + 24);
 	}
 };

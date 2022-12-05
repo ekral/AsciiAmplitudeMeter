@@ -31,17 +31,15 @@ struct CtyrbokyHranol
 
 	void Nakresli(Kamera& kamera, Platno& platno)
 	{
-		double f = 20.0;
+		Bod2d a0 = kamera.Projekce(dolni[0]);
+		Bod2d b0 = kamera.Projekce(dolni[1]);
+		Bod2d c0 = kamera.Projekce(dolni[2]);
+		Bod2d d0 = kamera.Projekce(dolni[3]);
 
-		Bod2d a0 = kamera.Projekce(dolni[0], f);
-		Bod2d b0 = kamera.Projekce(dolni[1], f);
-		Bod2d c0 = kamera.Projekce(dolni[2], f);
-		Bod2d d0 = kamera.Projekce(dolni[3], f);
-
-		Bod2d a1 = kamera.Projekce(horni[0], f);
-		Bod2d b1 = kamera.Projekce(horni[1], f);
-		Bod2d c1 = kamera.Projekce(horni[2], f);
-		Bod2d d1 = kamera.Projekce(horni[3], f);
+		Bod2d a1 = kamera.Projekce(horni[0]);
+		Bod2d b1 = kamera.Projekce(horni[1]);
+		Bod2d c1 = kamera.Projekce(horni[2]);
+		Bod2d d1 = kamera.Projekce(horni[3]);
 
 		platno.NakresliUsecku(a0, b0);
 		platno.NakresliUsecku(b0, c0);
@@ -57,5 +55,9 @@ struct CtyrbokyHranol
 		platno.NakresliUsecku(b0, b1);
 		platno.NakresliUsecku(c0, c1);
 		platno.NakresliUsecku(d0, d1);
+
+		
+
+		platno.popredi = 'o';
 	}
 };

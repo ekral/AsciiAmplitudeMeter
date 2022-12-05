@@ -13,7 +13,7 @@
 // Doporuceny soubor pro testovani:
 // https://freewavesamples.com/ensoniq-zr-76-01-dope-77-bpm
 
-#define PATH "C:\\Users\\erik\\Downloads\\file.wav"
+#define PATH "C:\\Users\\erik\\source\\repos\\AsciiAmplitudeMeter\\file.wav"
 
 double Rescale(int amplitude, double max)
 {
@@ -45,8 +45,8 @@ int main()
 
 	Platno platno(20, 70, '-', 'o');
 	
-	CtyrbokyHranol levyHranol(Bod3d(-4.0, 0.0, -20.0), 2, 3);
-	CtyrbokyHranol pravyHranol(Bod3d(4.0, 0.0, -20.0), 2, 3);
+	CtyrbokyHranol levyHranol(Bod3d(-10.0, -24.0, -20.0), 8, 8);
+	CtyrbokyHranol pravyHranol(Bod3d(2.0, -24.0, -20.0), 8, 8);
 	
 	while (true)
 	{
@@ -68,7 +68,7 @@ int main()
 
 			platno.Vymaz();
 
-			const int max = 20;
+			const int max = 100;
 
 			double vyskaLeft = Rescale(lMax, max);
 			double vyskaRight = Rescale(rMax, max);
@@ -93,17 +93,17 @@ int main()
 				case 75:
 					--kamera.pozice.x;
 					break;
+				case 72:
+					++kamera.pozice.y;
+					break;
 				case 80:
+					--kamera.pozice.y;
+					break;
+				case 's':
 					++kamera.pozice.z;
 					break;
-				case 72:
+				case 'w':
 					--kamera.pozice.z;
-					break;
-				case 'a':
-					kamera.rotace.y += 0.1;
-					break;
-				case 'd':
-					kamera.rotace.y -= 0.1;
 					break;
 			
 				}

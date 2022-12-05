@@ -64,6 +64,11 @@ public:
 		puts(data);
 	}
 
+	void NakresliBod(Bod2d bod)
+	{
+		NakresliBod(bod.x, bod.y);
+	}
+
 	void NakresliBod(double x, double y)
 	{
 		int xRound = (int)round(y);
