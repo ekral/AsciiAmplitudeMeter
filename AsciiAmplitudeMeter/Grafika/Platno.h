@@ -72,6 +72,9 @@ public:
 		int indexRadku = pocetRadku - xRound - 1;
 		int indexSloupce = yRound;
 
+		if (indexSloupce < 0 || indexSloupce > (pocetSloupcu - 2)) return;
+		if (indexRadku < 0 || indexRadku > (pocetRadku - 2)) return;
+
 		int index = (indexRadku * (pocetSloupcu + 1)) + indexSloupce;
 
 		data[index] = popredi;

@@ -5,9 +5,10 @@
 struct Kamera
 {
 	Bod3d pozice;
+	Bod3d rotace;
 	double f;
 
-	Kamera(Bod3d pozice, double f) : pozice(pozice), f(f)
+	Kamera(Bod3d pozice, Bod3d rotace, double f) : pozice(pozice), rotace(rotace), f(f)
 	{
 	}
 
@@ -15,9 +16,13 @@ struct Kamera
 	{
 		bod -= pozice;
 
-		double x = f * -bod.x / bod.z;
-		double y = f * -bod.y / bod.z;
+		/*double x = bod.z * sin(-rotace.y) + bod.x * cos(-rotace.y);
+		double y = bod.y;
+		double z = bod.z * cos(-rotace.y) - bod.x * sin(-rotace.y);*/
 
-		return Bod2d(x, y);
+		double xp = -(f * bod.x / bod.z);
+		double yp = -(f * bod.y / bod.z);
+
+		return Bod2d(xp, yp);
 	}
 };

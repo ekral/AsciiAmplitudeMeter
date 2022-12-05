@@ -18,11 +18,3 @@ Bod2d RotaceKolemBodu(Bod2d p, Bod2d stred, double stupne)
 {
 	return Rotace(p - stred, stupne) + stred;
 }
-
-Bod2d Projekce(Bod3d bod, double f)
-{
-	double x = f * -bod.x / bod.z;
-	double y = f * -bod.y / bod.z;
-
-	return Bod2d(x, y);
-}
