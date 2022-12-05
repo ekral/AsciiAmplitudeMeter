@@ -13,7 +13,15 @@
 // Doporuceny soubor pro testovani:
 // https://freewavesamples.com/ensoniq-zr-76-01-dope-77-bpm
 
-#define PATH "C:\\Users\\ekral\\source\\repos\\AsciiAmplitudeMeter\\file.wav"
+#define PATH "C:\\Users\\erik\\source\\repos\\AsciiAmplitudeMeter\\file.wav"
+
+double Rescale(int amplitude, double max)
+{
+	double k = (double)amplitude / 32768;
+	double value = k * max;
+
+	return value;
+}
 
 int main()
 {
@@ -53,12 +61,14 @@ int main()
 		{
 			auto elapsedMilliseconds = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - start);
 
-			play = wav.MaxAmplitude(elapsedMilliseconds.count(), 2, lMax, rMax);
+			play = wav.CalculateAmplitude(elapsedMilliseconds.count(), 2, lMax, rMax);
 
 			platno.Vymaz();
 
-			int xLeft = (lMax * (platno.pocetSloupcu - 1)) / 32768;
-			int xRight = (rMax * (platno.pocetSloupcu - 1)) / 32768;
+			const int max = platno.pocetSloupcu - 1;
+
+			double xLeft = Rescale(lMax, max);
+			double xRight = Rescale(rMax, max);
 
 			platno.NakresliUsecku(Bod2d(0.0, 1.0), Bod2d(xLeft, 1.0));
 			platno.NakresliUsecku(Bod2d(0.0, 0.0), Bod2d(xRight, 0.0));

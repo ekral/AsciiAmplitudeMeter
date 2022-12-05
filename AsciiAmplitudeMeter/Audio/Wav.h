@@ -4,8 +4,6 @@
 #include <fstream>
 #include <cmath>
 
-// https://blog.demofox.org/2015/04/14/decibels-db-and-amplitude/
-
 struct Wav
 {
 	Wav(Wav&) = delete;
@@ -31,51 +29,6 @@ struct Wav
 	uint32_t size{};
 	uint8_t* data;
 	uint32_t framesCount{};
-
-	bool MaxAmplitude(size_t timeMilliseconds, size_t widthMilliseconds, int& leftResult, int& rightResult)
-	{
-		size_t offset = (timeMilliseconds * fmtSampleRate) / 1000;
-		
-		if (offset >= framesCount)
-		{
-			leftResult = 0;
-			rightResult = 0;
-
-			return false;
-		}
-		
-		size_t width = (widthMilliseconds * fmtSampleRate) / 1000;
-		size_t end = (offset + width);
-
-		if (end >= framesCount)
-		{
-			end = framesCount;
-		}
-
-		int16_t* const ptBegin = reinterpret_cast<int16_t*>(data);
-		int16_t* const ptStart = ptBegin + (2 * offset);
-		int16_t* const ptEnd =  ptBegin + (2 * end);
-
-		int lMax = 0.0;
-		int rMax = 0.0;
-
-		for (int16_t* p = ptStart; p < ptEnd;)
-		{
-			int16_t left = *p;
-			++p;
-
-			int16_t right = *p;
-			++p;
-		
-			lMax = std::max<int>(lMax, std::abs(left));
-			rMax = std::max<int>(rMax, std::abs(right));
-		}
-
-		leftResult = lMax;
-		rightResult = rMax;
-
-		return true;
-	}
 
 	bool LoadWavFile(const char* filePath)
 	{
@@ -157,6 +110,51 @@ struct Wav
 		}
 		
 		return false;
+	}
+
+	bool CalculateAmplitude(size_t timeMilliseconds, size_t widthMilliseconds, int& leftResult, int& rightResult)
+	{
+		size_t offset = (timeMilliseconds * fmtSampleRate) / 1000;
+
+		if (offset >= framesCount)
+		{
+			leftResult = 0;
+			rightResult = 0;
+
+			return false;
+		}
+
+		size_t width = (widthMilliseconds * fmtSampleRate) / 1000;
+		size_t end = (offset + width);
+
+		if (end >= framesCount)
+		{
+			end = framesCount;
+		}
+
+		int16_t* const ptBegin = reinterpret_cast<int16_t*>(data);
+		int16_t* const ptStart = ptBegin + (2 * offset);
+		int16_t* const ptEnd = ptBegin + (2 * end);
+
+		int lMax = 0.0;
+		int rMax = 0.0;
+
+		for (int16_t* p = ptStart; p < ptEnd;)
+		{
+			int16_t left = *p;
+			++p;
+
+			int16_t right = *p;
+			++p;
+
+			lMax = std::max<int>(lMax, std::abs(left));
+			rMax = std::max<int>(rMax, std::abs(right));
+		}
+
+		leftResult = lMax;
+		rightResult = rMax;
+
+		return true;
 	}
 
 	~Wav()
