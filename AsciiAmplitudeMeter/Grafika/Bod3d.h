@@ -11,13 +11,22 @@ struct Bod3d
 
 	}
 
-	Bod3d operator + (Bod3d& other)
+	Bod3d operator + (const Bod3d& other)
 	{
 		return Bod3d(x + other.x, y + other.y, z + other.z);
 	}
 
-	Bod3d operator - (Bod3d& other)
+	Bod3d operator - (const Bod3d& other)
 	{
 		return Bod3d(x - other.x, y - other.y, z - other.z);
+	}
+
+	Bod3d& operator -= (Bod3d& other)
+	{
+		x -= other.x;
+		y -= other.y;
+		z -= other.z;
+
+		return *this;
 	}
 };

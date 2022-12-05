@@ -138,7 +138,7 @@
     <ClInclude Include="Grafika\CtyrbokyHranol.h" />
     <ClInclude Include="Grafika\Platno.h" />
     <ClInclude Include="Grafika\Transformace.h" />
-    <ClInclude Include="Grafika\Usecka.h" />
+    <ClInclude Include="Grafika\Kamera.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -35,10 +35,10 @@
     <ClInclude Include="Grafika\Transformace.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Grafika\Usecka.h">
+    <ClInclude Include="Audio\Wav.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Audio\Wav.h">
+    <ClInclude Include="Grafika\Kamera.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

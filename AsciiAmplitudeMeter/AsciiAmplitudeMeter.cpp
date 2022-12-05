@@ -2,6 +2,7 @@
 
 // pridat Winmm.lib do linkeru
 #include <Windows.h>
+#include <conio.h>
 #include <Mmsystem.h>
 #include <stdio.h>
 #include <chrono>
@@ -40,8 +41,10 @@ int main()
 		return -1;
 	}
 
-	Platno platno(20, 70, ' ', 'x');
+	Kamera kamera(Bod3d(0, 0, 0), 20.0);
 
+	Platno platno(20, 70, '-', 'x');
+	
 	CtyrbokyHranol levyHranol(Bod3d(2.0, 2.0, -8.0), 3, 3);
 	CtyrbokyHranol pravyHranol(Bod3d(2.0 + 8, 2.0, -8.0), 3, 3);
 	
@@ -73,10 +76,34 @@ int main()
 			levyHranol.ZmenVysku(vyskaLeft);
 			pravyHranol.ZmenVysku(vyskaLeft);
 
-			levyHranol.Nakresli(platno);
-			pravyHranol.Nakresli(platno);
+			levyHranol.Nakresli(kamera, platno);
+			pravyHranol.Nakresli(kamera, platno);
 
 			platno.Zobraz();
+
+			if (_kbhit())
+			{
+				int klavesa = _getch();
+
+				switch (klavesa)
+				{
+				case 77:
+					++kamera.pozice.x;
+					break;
+				case 75:
+					--kamera.pozice.x;
+					break;
+				case 80:
+					++kamera.pozice.z;
+					break;
+				case 72:
+					--kamera.pozice.z;
+					break;
+			
+				}
+				printf("%10d\n", klavesa);
+				
+			}
 			
 		} while (play);
 

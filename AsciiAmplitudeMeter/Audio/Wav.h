@@ -136,8 +136,8 @@ struct Wav
 		int16_t* const ptStart = ptBegin + (2 * offset);
 		int16_t* const ptEnd = ptBegin + (2 * end);
 
-		int lMax = 0.0;
-		int rMax = 0.0;
+		int lMax = 0;
+		int rMax = 0;
 
 		for (int16_t* p = ptStart; p < ptEnd;)
 		{

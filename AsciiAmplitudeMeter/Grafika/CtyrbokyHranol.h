@@ -2,6 +2,7 @@
 #include "Bod3d.h"
 #include "Platno.h"
 #include "Transformace.h"
+#include "Kamera.h"
 
 struct CtyrbokyHranol
 {
@@ -28,19 +29,19 @@ struct CtyrbokyHranol
 		horni[3].y = dolni[3].y + v;
 	}
 
-	void Nakresli(Platno& platno)
+	void Nakresli(Kamera& kamera, Platno& platno)
 	{
 		double f = 20.0;
 
-		Bod2d a0 = Projekce(dolni[0], f);
-		Bod2d b0 = Projekce(dolni[1], f);
-		Bod2d c0 = Projekce(dolni[2], f);
-		Bod2d d0 = Projekce(dolni[3], f);
+		Bod2d a0 = kamera.Projekce(dolni[0], f);
+		Bod2d b0 = kamera.Projekce(dolni[1], f);
+		Bod2d c0 = kamera.Projekce(dolni[2], f);
+		Bod2d d0 = kamera.Projekce(dolni[3], f);
 
-		Bod2d a1 = Projekce(horni[0], f);
-		Bod2d b1 = Projekce(horni[1], f);
-		Bod2d c1 = Projekce(horni[2], f);
-		Bod2d d1 = Projekce(horni[3], f);
+		Bod2d a1 = kamera.Projekce(horni[0], f);
+		Bod2d b1 = kamera.Projekce(horni[1], f);
+		Bod2d c1 = kamera.Projekce(horni[2], f);
+		Bod2d d1 = kamera.Projekce(horni[3], f);
 
 		platno.NakresliUsecku(a0, b0);
 		platno.NakresliUsecku(b0, c0);
