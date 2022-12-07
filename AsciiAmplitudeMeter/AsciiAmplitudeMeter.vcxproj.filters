@@ -32,9 +32,6 @@
     <ClInclude Include="Grafika\Platno.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Grafika\Transformace.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Audio\Wav.h">
       <Filter>Header Files</Filter>
     </ClInclude>
