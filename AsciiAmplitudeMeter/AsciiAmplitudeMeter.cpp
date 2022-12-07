@@ -45,8 +45,13 @@ int main()
 
 	Platno platno(20, 70, '-', 'o');
 	
-	CtyrbokyHranol levyHranol(Bod3d(-10.0, -24.0, -20.0), 8, 8);
-	CtyrbokyHranol pravyHranol(Bod3d(2.0, -24.0, -20.0), 8, 8);
+	double n = 20.0;
+	double d = 10.0;
+	double y = -8;
+	double z = -n - 10;
+
+	CtyrbokyHranol levyHranol(Bod3d(-d - n, y, z), n, 1.0);
+	CtyrbokyHranol pravyHranol(Bod3d(d, y, z), n, 1.0);
 	
 	while (true)
 	{
@@ -68,7 +73,7 @@ int main()
 
 			platno.Vymaz();
 
-			const int max = 100;
+			const int max = 50;
 
 			double vyskaLeft = Rescale(lMax, max);
 			double vyskaRight = Rescale(rMax, max);
@@ -78,6 +83,8 @@ int main()
 
 			levyHranol.Nakresli(kamera, platno);
 			pravyHranol.Nakresli(kamera, platno);
+
+			platno.NakresliBod(0, 0);
 
 			platno.Zobraz();
 
@@ -105,15 +112,9 @@ int main()
 				case 'w':
 					--kamera.pozice.z;
 					break;
-			
 				}
-				printf("%10d\n", klavesa);
-				
 			}
 			
 		} while (play);
-
-		/*printf("Stiskni klavesu enter pro opakovani.\n");
-		int znak = getchar();*/
 	}
 }

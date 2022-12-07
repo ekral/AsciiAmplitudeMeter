@@ -8,8 +8,6 @@
 struct Platno
 {
 private:
-	// Ukol: zmìnit z použití matice na zásobníku na použití øetìzce znakù vèetnì znakù pro nový øádek v jednorozmìrném poli na haldì.
-	
 	char* data;
 
 public:
@@ -63,22 +61,18 @@ public:
 
 		puts(data);
 	}
-
-	void NakresliBod(Bod2d bod)
-	{
-		NakresliBod(bod.x, bod.y);
-	}
+	
 
 	void NakresliBod(double x, double y)
 	{
-		int xRound = (int)round(y);
-		int yRound = (int)round(x);
+		int xRound = (int)round(y + (pocetRadku / 2.0));
+		int yRound = (int)round(x + (pocetSloupcu / 2.0));
 
 		int indexRadku = pocetRadku - xRound - 1;
 		int indexSloupce = yRound;
 
-		if (indexSloupce < 0 || indexSloupce > (pocetSloupcu - 2)) return;
-		if (indexRadku < 0 || indexRadku > (pocetRadku - 2)) return;
+		if (indexSloupce < 0 || indexSloupce >(pocetSloupcu - 2)) return;
+		if (indexRadku < 0 || indexRadku >(pocetRadku - 2)) return;
 
 		int index = (indexRadku * (pocetSloupcu + 1)) + indexSloupce;
 

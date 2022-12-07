@@ -1,7 +1,6 @@
 #pragma once
 #include "Bod3d.h"
 #include "Platno.h"
-#include "Transformace.h"
 #include "Kamera.h"
 
 struct CtyrbokyHranol
@@ -13,7 +12,7 @@ struct CtyrbokyHranol
 	Bod3d dolni[4];
 	Bod3d horni[4];
 
-	CtyrbokyHranol(Bod3d a, double n, double v) : 
+	CtyrbokyHranol(Bod3d a, double n, double v) :
 		pa(a), n(n), v(v), 
 		dolni{ Bod3d(a.x, a.y, a.z), Bod3d(a.x + n, a.y, a.z), Bod3d(a.x + n, a.y, a.z + n), Bod3d(a.x, a.y, a.z + n) },
 		horni{ Bod3d(a.x, a.y + v, a.z), Bod3d(a.x + n, a.y + v, a.z), Bod3d(a.x + n, a.y + v, a.z + n), Bod3d(a.x, a.y + v, a.z + n) }
@@ -55,9 +54,5 @@ struct CtyrbokyHranol
 		platno.NakresliUsecku(b0, b1);
 		platno.NakresliUsecku(c0, c1);
 		platno.NakresliUsecku(d0, d1);
-
-		
-
-		platno.popredi = 'o';
 	}
 };

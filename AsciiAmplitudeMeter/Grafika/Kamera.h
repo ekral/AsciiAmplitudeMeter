@@ -16,13 +16,9 @@ struct Kamera
 	{
 		bod -= pozice;
 
-		/*double x = bod.z * sin(-rotace.y) + bod.x * cos(-rotace.y);
-		double y = bod.y;
-		double z = bod.z * cos(-rotace.y) - bod.x * sin(-rotace.y);*/
-
 		double xp = -(f * bod.x / bod.z);
 		double yp = -(f * bod.y / bod.z);
 
-		return Bod2d((4 * xp) + 35, yp + 24);
+		return Bod2d(xp, yp);
 	}
 };
